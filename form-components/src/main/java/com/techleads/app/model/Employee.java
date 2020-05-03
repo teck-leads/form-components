@@ -13,10 +13,14 @@ public class Employee {
 	private Integer id;
 	private String name;
 	private String countryRadio;
-	//private List<SkillSet> skillSetList;
-	private String[] skillSetArray;
+	//Multi-select dropdown start
+	private List<SkillSet> skillSetList;
+	private String[] skillSetOptionsValuesMultiDropdown;
+	//Multi-select dropdown end
+	//Single-select dropdown start
 	private List<Qualification> qualificationList;
 	private String qualification;
+	//Single-select dropdown end
 	private String notes;
 
 }

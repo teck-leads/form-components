@@ -1,7 +1,7 @@
 package com.techleads.app.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,28 +40,36 @@ public class EmpController {
 
 	@PostMapping(value = { "/register" })
 	public String processRegistration(@ModelAttribute("empCmd") Employee employee, BindingResult result, Model model) {
-
-		
 	
-		List<Qualification> qualifications = service.qualifications();
+		
+		
+		//Multi-dropdwon: Set Options values Id to SkillSet List of Employee object Start
 		List<SkillSet> skillSets = service.skillSets();
-		
-		
-		
-		String[] skillSetList = employee.getSkillSetArray();
-		
-		if(!StringUtils.isEmpty(skillSetList)) {
-			for (int i = 0; i < skillSetList.length; i++) {
-				for (SkillSet skillSet : skillSets) {
-					if(skillSet.getId()==Integer.parseInt(skillSetList[i])){
-						//employee.getSkillSetList().set(i, skillSet);
+		String[] skillSetList = employee.getSkillSetOptionsValuesMultiDropdown();
+		List<SkillSet> newSkillSet=new ArrayList<>();
+		try {
+			if(!StringUtils.isEmpty(skillSetList)) {
+				for (String optionValueId : skillSetList) {
+					for (SkillSet skillSet : skillSets) {
+						if(skillSet.getId()==Integer.parseInt(optionValueId)){
+							SkillSet sk=new SkillSet();
+							sk.setId(skillSet.getId());
+							sk.setName(skillSet.getName());
+							newSkillSet.add(sk);
+						}
 					}
 				}
-
 			}
+			
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
 		}
+		employee.setSkillSetList(newSkillSet);
+		//Multi-dropdwon: Set Options values Id to SkillSet List of Employee object End
 		
 		
+		//single-dropdwon: Set Options values Id to qualification property of Employee object Start
+		List<Qualification> qualifications = service.qualifications();
 		String qulfyName = "";
 		if (!StringUtils.isEmpty(employee.getQualification())) {
 			for (Qualification qualification : qualifications) {
@@ -72,7 +80,7 @@ public class EmpController {
 				}
 			}
 		}
-
+		//single-dropdwon: Set Options values Id to qualification property of Employee object End
 		model.addAttribute("employee", employee);
 
 		return "result";

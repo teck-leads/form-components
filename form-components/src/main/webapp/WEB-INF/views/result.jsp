@@ -35,14 +35,22 @@
 		</tr>
 		
 		<tr>
-			<%-- <td>SkillSet</td>
-			<td>
+			<td>SkillSet:</td>
+			
+			
+			
 			<c:forEach items="${employee.skillSetList }" var="skill">
-			${skill }
+			<td>${skill.name }
+			<c:if test="${employee.skillSetList.size() lt employee.skillSetList.size()-1}">
+
+</c:if>
+			
+			</td>
+			
 			
 			</c:forEach>
 			
-			</td> --%>
+			
 		</tr>
 	</table>
 	<a href="/register">Home</a>

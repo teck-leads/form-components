@@ -50,7 +50,7 @@
 			<div class="form-group">
 				<label for="exampleFormControlSelect2">Skill Set</label>
 				<%-- <form:select path="skillSetList" multiple="true" class="form-control"> --%>
-				<form:select path="skillSetArray" multiple="true" class="form-control">
+				<form:select path="skillSetOptionsValuesMultiDropdown" multiple="true" class="form-control">
 				
 					<form:options items="${skillSetList }" itemValue="id"
 						itemLabel="name" />
