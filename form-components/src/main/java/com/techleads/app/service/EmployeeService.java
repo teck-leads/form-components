@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.techleads.app.model.Bands;
 import com.techleads.app.model.Qualification;
 import com.techleads.app.model.SkillSet;
 
@@ -52,6 +53,15 @@ public class EmployeeService {
 				new SkillSet(17, "Security Vulnerabilities"));
 
 		return skillSet;
+	}
+	
+	public List<Bands> bands() {
+		List<Bands> bands = List.of(
+				new Bands(10, "A"), new Bands(11, "B"),
+				new Bands(12, "C"), new Bands(13, "D")
+			);
+
+		return bands;
 	}
 	
 

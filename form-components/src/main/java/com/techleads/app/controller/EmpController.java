@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.techleads.app.model.Bands;
 import com.techleads.app.model.Employee;
 import com.techleads.app.model.Qualification;
 import com.techleads.app.model.SkillSet;
@@ -29,6 +30,11 @@ public class EmpController {
 	@ModelAttribute("skillSetList")
 	public List<SkillSet> skillSets(){
 		return service.skillSets();
+	}
+	
+	@ModelAttribute("bands")
+	public List<Bands> bands() {
+		 return service.bands();
 	}
 
 	@GetMapping(value = { "/register" })
@@ -81,6 +87,27 @@ public class EmpController {
 			}
 		}
 		//single-dropdwon: Set Options values Id to qualification property of Employee object End
+		
+		//Multi-select checkboxes String[] bandsMultiSelectionCheckBoxes IDs set to bandsList Start
+		List<Bands> newBands = new ArrayList<Bands>();
+		List<Bands> bands = service.bands();
+		String[] bandsMultiSelectionCheckBoxes = employee.getBandsMultiSelectionCheckBoxes();
+		if (!StringUtils.isEmpty(bandsMultiSelectionCheckBoxes)) {
+			for (String bandId : bandsMultiSelectionCheckBoxes) {
+				for (Bands band : bands) {
+					if (band.getId() == Integer.parseInt(bandId)) {
+						Bands bnd = new Bands();
+						bnd.setId(band.getId());
+						bnd.setName(band.getName());
+						newBands.add(bnd);
+					}
+				}
+			}
+		}
+		employee.setBandsList(newBands);
+		//Multi-select checkboxes String[] bandsMultiSelectionCheckBoxes IDs set to bandsList End
+		
+		
 		model.addAttribute("employee", employee);
 
 		return "result";
