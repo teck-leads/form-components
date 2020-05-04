@@ -1,5 +1,6 @@
 package com.techleads.app.model;
 
+import java.util.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -30,8 +31,12 @@ public class Employee {
 	//textArea
 	private String notes;
 	
-	//Multi-selection checkboxes
+	//Multi-selection checkboxes Start
 	private String[] bandsMultiSelectionCheckBoxes;
 	private List<Bands> bandsList;
+	//Multi-selection checkboxes End
+	
+	//Util.Date
+	private Date availableFromdate;
 
 }

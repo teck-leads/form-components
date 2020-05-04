@@ -57,9 +57,18 @@
 <!--Text Area  Starts -->
 			<div class="form-group">
 				<label for="notes">Notes</label>
-				<form:textarea path="notes" rows="3" class="form-control" />
+				<form:textarea path="notes" rows="2" class="form-control" />
 			</div>
 <!--Text Area  Ends-->
+			
+			
+<!--Date picker  Starts -->	
+			<div class="form-group">
+				<label for="notes">Available From</label>
+				<form:input path="availableFromdate" type="date" class="form-control"/>
+			</div>
+
+<!--Date picker  Starts -->			
 			
 <!--submit button  Starts -->	
 			<td>

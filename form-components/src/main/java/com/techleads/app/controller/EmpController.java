@@ -1,14 +1,19 @@
 package com.techleads.app.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -22,6 +27,13 @@ import com.techleads.app.service.EmployeeService;
 public class EmpController {
 	@Autowired
 	private EmployeeService service;
+	
+	
+	@InitBinder
+	public void dateIntiBinder(ServletRequestDataBinder dataBinder) {
+		SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+		dataBinder.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
+	}
 
 	@ModelAttribute("qualificationList")
 	public List<Qualification> qualifications() {
@@ -46,8 +58,8 @@ public class EmpController {
 
 	@PostMapping(value = { "/register" })
 	public String processRegistration(@ModelAttribute("empCmd") Employee employee, BindingResult result, Model model) {
-	
-		
+		employee.setName(StringUtils.capitalize(employee.getName()));
+		employee.setCountryRadio(StringUtils.capitalize(employee.getCountryRadio()));
 		
 		//Multi-dropdwon: Set Options values Id to SkillSet List of Employee object Start
 		List<SkillSet> skillSets = service.skillSets();
